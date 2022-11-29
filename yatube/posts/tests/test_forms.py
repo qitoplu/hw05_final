@@ -127,4 +127,3 @@ class PostCreateFormTests(TestCase):
         )
         self.assertEqual(Comment.objects.count(), comments_count + 1)
         self.assertEqual(f'{self.post.comments.all()[0]}', form['text'])
-        
