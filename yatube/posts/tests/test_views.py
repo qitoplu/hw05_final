@@ -1,11 +1,11 @@
+from core.utils import POSTS_QUANTITY
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from ..models import Group, Post, Follow
-from ..views import POSTS_QUANTITY
+from ..models import Follow, Group, Post
 
 POSTS_OVERALL = 13
 User = get_user_model()
@@ -193,6 +193,21 @@ class TestPaginator(TestCase):
                 count_posts_second,
                 POSTS_OVERALL - POSTS_QUANTITY
             )
+
+    def test_cache_index(self):
+        post = Post.objects.create(
+            text='Текст',
+            author=self.user)
+        response1 = self.authorized_client.get(
+            reverse('posts:index')).content
+        post.delete()
+        response2 = self.authorized_client.get(
+            reverse('posts:index')).content
+        self.assertEqual(response1, response2)
+        cache.clear()
+        response3 = self.authorized_client.get(
+            reverse('posts:index')).content
+        self.assertNotEqual(response2, response3)
 
 
 class FollowTest(TestCase):
