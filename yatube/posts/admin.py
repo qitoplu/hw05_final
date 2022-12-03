@@ -20,7 +20,7 @@ class GroupAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('author', 'post', 'text', 'created',)
     search_fields = ('text',)
-    list_filter = ('pub_date',)
+    list_filter = ('created',)
     empty_value_display = '-пусто-'
 
 

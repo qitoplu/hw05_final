@@ -1,9 +1,10 @@
-from core.utils import POSTS_QUANTITY
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.test import Client, TestCase
 from django.urls import reverse
+
+from core.utils import POSTS_QUANTITY
 
 from ..models import Follow, Group, Post
 

@@ -1,7 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Q
-from django.db.models.constraints import UniqueConstraint
 
 User = get_user_model()
 
@@ -96,8 +94,10 @@ class Follow(models.Model):
     )
 
     class Meta:
-        UniqueConstraint(
-            fields=['user', 'author'],
-            condition=Q(status='DRAFT'),
-            name='follow_not_author'
-        )
+        db_table = 'Follow'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'author'],
+                name='follow_not_author'
+            )
+        ]
